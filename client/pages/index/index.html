@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Clan Manager</title>
+    <link rel="manifest" href="./manifest.json">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    <x-wot-login-component></x-wot-login-component>
+    <d-application route="home">
+        <nav>
+            <ul>
+                <li>
+                    <d-route name="home" template="/templates/index/home.tpl.html" stateful>Home</d-route>
+                </li>
+                <li>                    
+                    <d-route name="Campa" template="/templates/index/home.tpl.html" stateful>Campa</d-route>
+                </li>
+            </ul>
+        </nav>
+        <d-view></d-view>
+    </d-application>
+</body>
+</html>
