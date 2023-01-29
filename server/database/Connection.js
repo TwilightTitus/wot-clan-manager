@@ -1,7 +1,9 @@
 export default class Connection {
-	async execute(query, params) {}
+	async query(query, params) {}
 
 	async commit() {}
+
+	async rollback() {}
 
 	async close() {}
 }
