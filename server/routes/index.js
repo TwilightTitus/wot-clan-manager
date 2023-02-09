@@ -1,1 +1,2 @@
-import "./TestRoute.js";
+import "./system/index.js";
+import "./management/index.js";

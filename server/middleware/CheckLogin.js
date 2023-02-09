@@ -1,27 +1,21 @@
 import Application from "../Application.js";
-const HEADER_AUTHORIZATION = "Authorization";
+import { autorizationToken } from "../utils/AuthorizationUtil.js";
+import { LOGIN_CHECK__IGRNORED_PATHS } from "../Constants.js";
 
+Application.use(async (request, response, next) => {
+	if (request.method == "OPTIONS") return next();
 
-const toUser = (data) => {
-    return JSON.parse(Buffer.from(data, "base64"));
-};
+	if (LOGIN_CHECK__IGRNORED_PATHS.includes(request.path)) return next();
 
+	const { session } = request;
+	const { member, accessToken, accountId } = session;
 
+	if (!member && !accessToken && !accountId) return response.status(401).end();
 
-Application.use( (request, response, next) => {
-    if(request.method != "OPTIONS"){
-        let value = request.get(HEADER_AUTHORIZATION);
-        if(!value)
-            return response.status(401).end();
-        
-        value = /Bearer (.+)/ig.exec(value);
-        if(!value || !value[1])
-            return response.status(401).end();       
-        
-        const user = toUser(value[1]);
+	const token = autorizationToken(request);
+	if (!token) return response.status(401).end();
 
-        request.user = user;
-    }
+	if (accessToken != token) return response.status(401).end();
 
-    next();
+	await next();
 });

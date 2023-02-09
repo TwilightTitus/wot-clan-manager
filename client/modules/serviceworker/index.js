@@ -2,7 +2,7 @@ const VERSION = 1;
 const CACHENAME = `wot-clan-manager:${VERSION}`;
 
 const INITAL_CACHED_FILES = ["/index.html"];
-const ALLOWED_URLS = [".*"];
+const ALLOWED_URLS = ["https?::/localhost/.*"];
 const DENIED_URLS = [/[^\/]*\/api\.*/ig];
 
 const matchByFilter = (url, filters) => {

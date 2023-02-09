@@ -29,7 +29,10 @@ class PostgreConnection extends Connection{
 		if(this.#closed)
 			throw new Error(ERROR__CONNECTION_CLOSED);
 		await this.#transaction();
-		return (await this.#connection).query(query, params);
+		return (await this.#connection).query({
+			text: query,
+			values: params
+		});
 	}
 
 	async commit(){

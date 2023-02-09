@@ -1,4 +1,15 @@
+CREATE TABLE CLAN (
+    id INTEGER PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    clantag VARCHAR NOT NULL
+);
+
+
 CREATE TABLE MEMBER (
     id INTEGER PRIMARY KEY,
-    name VARCHAR NOT NULL
-)
+    clanid INTEGER NOT NULL,
+    name VARCHAR NOT NULL,
+    role VARCHAR NOT NULL,
+    wn8Overall INTEGER NOT NULL,
+    wn8Recent INTEGER NOT NULL    
+);

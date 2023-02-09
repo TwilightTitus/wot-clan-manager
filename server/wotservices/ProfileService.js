@@ -1,34 +1,45 @@
 import fetch from "node-fetch";
-import {APPLICATIONID} from "../Constants.js";
+import { APPLICATIONID, WOT_ENDPOINT_BASE } from "../Constants.js";
 
-export const getProfile = async (accountId, accessToken) => {
+const extra ="private.garage";
+const fields = "nickname,account_id,clan_id,global_rating,private.garage"
 
-    const url = new URL("https://api.worldoftanks.eu/wot/account/info/");
-    url.searchParams.set("application_id", APPLICATIONID);
-    url.searchParams.set("account_id", accountId);
-    url.searchParams.set("access_token", accessToken);
+const profileMapper = (profile) => {
 
-    let response = await fetch(url);
-    response = await response.json();
+	console.log(profile);
 
-    response = response?.data[accountId];
-    if(!response )
-        return null;
+	return {
+		id: profile.account_id,
+		username: profile.nickname,
+		clanid: profile.clan_id,
+		wtr: profile.global_rating,
+	};
+};
 
-    const profile = {
-        id: accountId,
-        username: response.nickname,
-        budgets : {
-            bonds: response.private.bonds 
-        },
-        clanid: response.clan_id,
-        rating: {
-            wtr: response.global_rating
-        } 
-    }
-    
+export const getProfileByAccessToken = async (accessToken) => {
+	return getProfile(accessToken);
+};
 
-    console.log(profile);
+export const getProfile = async (accessToken, accountId) => {
+	try {
+		const url = new URL(`${WOT_ENDPOINT_BASE}/wot/account/info/`);
+		url.searchParams.set("application_id", APPLICATIONID);
+		url.searchParams.set("account_id", accountId);
+		url.searchParams.set("access_token", accessToken);
+		url.searchParams.set("extra", extra);
+		url.searchParams.set("fields", fields);
 
-    return profile;
-}
+		let response = await fetch(url);
+		response = await response.json();
+		const { status, data } = response;
+		if (status == "error" || !data) return null;
+
+		response = data[accountId];
+		if (!response) return null;
+
+		return profileMapper(response);
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
+};
