@@ -1,12 +1,9 @@
-import {CLANIDS} from "../Constants.js";
 import DatabaseClient from "../utils/DatabaseClient.js";
-import { getClanData } from "../wotservices/ClanService.js";
 
 const TABLENAME = "clan";
 
 
-const storeClan = async (clan) => {
-    console.log("store clan", clan);
+export const storeClan = async (clan) => {
     const connection = await DatabaseClient.connection();
 
     await connection.query(`INSERT INTO ${TABLENAME} (id, name, clantag) VALUES ($1, $2, $3)
@@ -24,12 +21,5 @@ export const getClan = async (accessToken, clanId) => {
     await connection.close();
     return clanData;
 }
-
-export const syncData = async (accessToken) => {
-    const clanData =  await getClanData(accessToken, CLANIDS[0]);
-
-    await storeClan(clanData)
-
-};
 
 

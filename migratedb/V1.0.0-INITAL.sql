@@ -7,9 +7,8 @@ CREATE TABLE CLAN (
 
 CREATE TABLE MEMBER (
     id INTEGER PRIMARY KEY,
-    clanid INTEGER NOT NULL,
+    clanid INTEGER,
     name VARCHAR NOT NULL,
     role VARCHAR NOT NULL,
-    wn8Overall INTEGER NOT NULL,
-    wn8Recent INTEGER NOT NULL    
+    wtr INTEGER NOT NULL   
 );

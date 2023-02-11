@@ -1,8 +1,7 @@
 import Application from "../../Application.js";
-import { autorizationToken } from "../../utils/AuthorizationUtil.js";
 import { APPLICATIONID, BASEPATH__API, WOT_ENDPOINT_LOGIN, WOT_ENDPOINT_LOGIN_REFESH, API_SYSTEM_LOGIN } from "../../Constants.js";
 import { getMember } from "../../entitymanager/MemberManager.js";
-import session from "express-session";
+import { checkIfUser } from "../../wotservices/ProfileService.js";
 
 const API_PATH = API_SYSTEM_LOGIN;
 const PARAM__ACCESSTOKEN = "access_token";
@@ -30,8 +29,12 @@ const loginUser = async (request, response) => {
 
 	session.accessToken = accessToken;
 	session.accountId = accountId;
+
+	if(!(await checkIfUser(accessToken, accountId)))	
+		return response.status(401).end();
+
 	session.expiredAt = expiredAt * 1000;
-	session.member = await getMember(accessToken, accountId);
+	session.member = await getMember(accountId);
 	if(!session.member)
 		return response.status(403).end();
 		
