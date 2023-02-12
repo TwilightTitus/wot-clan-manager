@@ -46,6 +46,7 @@ class HTMLCampaElement extends Component {
         if(!this.#campa){
             const response = await fetch(new URL(`/api/campa`, location));
             this.#campa = await response.json();
+            console.log(this.#campa)
         }
 
         return this.#campa;
