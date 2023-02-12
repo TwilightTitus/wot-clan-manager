@@ -1,0 +1,49 @@
+<dialog>
+    <h3>Campa erstellen</h3>
+    <div>
+        <d-form>
+            <d-page>
+                <d-field name="name" required>
+                    <div>
+                        <label>Campa Name</label>
+                        <input type="text">
+                    </div>
+                </d-field>
+                <d-container name="dateRange">
+                    <fieldset>
+                        <legend>Campa Zeitram</legend> 
+                        <div>
+                            <d-field name="start" required>
+                                <label>von</label>
+                                <input type="date">
+                            </d-field>
+                            <d-field name="end" required>
+                                <label>bis</label>
+                                <input type="date">
+                            </d-field>
+                        </div>                       
+                    </fieldset>
+                </d-container>
+                <d-container name="timeRange">
+                    <fieldset>
+                        <legend>Tägliche Spielzeit</legend> 
+                        <div>
+                            <d-field name="start" required>
+                                <label>erstes Gefecht ab</label>
+                                <input type="time" value="19:00">
+                            </d-field>
+                            <d-field name="end" required>
+                                <label>letztes Gefecht ab</label>
+                                <input type="time" value="01:30">
+                            </d-field>
+                        </div>                       
+                    </fieldset>
+                </d-container>
+            </d-page>
+            <d-control>
+                <button @click:delegate="action:close-campa-dialog">close</button>
+                <d-control-submit class="button is-higlight" role="button">speichern</d-control-submit>
+            </d-control>
+        </d-form>
+    </div>
+</dialog>

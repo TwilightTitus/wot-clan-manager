@@ -4,8 +4,8 @@ import "@default-js/defaultjs-extdom";
 import "@default-js/defaultjs-app-toolbox";
 
 //css
-import "normalize.css";
 import "./css/style.css";
+import "./css/form.css";
 
 
 

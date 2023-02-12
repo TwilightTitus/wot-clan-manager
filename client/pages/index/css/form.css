@@ -1,0 +1,131 @@
+
+[condition-invalid]
+{
+	display: none;
+}
+
+
+d-form,
+d-page {
+	display: flex;
+	width: 100%;
+	max-width: 100%;
+	flex-direction: column;
+	gap: 1rem;;
+}
+d-validation,
+d-message,
+d-container,
+d-list,
+d-field
+{
+	width: 100%;
+	display: block;
+}
+
+d-progress-bar {
+	display: flex;
+	position: relative;
+}
+
+d-progress-bar div.progress {
+	opacity: 0.7;
+	background: linear-gradient(90deg, #55bbff 0%, #0f0fff 100%);
+	border-radius: 0.5rem;
+	width: var(--progress);
+	height: 100%;
+	position: absolute;
+	z-index: -100;
+}
+
+
+d-step {
+	margin: .5rem .5rem;
+	padding: 0.5rem 1rem;
+	background: lightgray;
+	border: .1rem solid black;
+	border-radius: .2rem;
+	cursor: pointer;
+}
+d-step[active], 
+d-step[active][readonly] {
+	background: orange;
+}
+
+d-step[readonly] {
+	background: darkgray;
+}
+
+d-page:not([active]),
+d-validation:not([active]),
+d-message:not([active])
+{
+	display: none;
+}
+
+.form-control-feedback 
+{
+	visibility: hidden;
+}
+
+[valid] > .has-feedback .glyphicon-ok.form-control-feedback,
+[invalid] > .has-feedback .glyphicon-remove.form-control-feedback
+{
+	visibility: visible;
+}
+
+d-control {
+	display: flex;
+}
+
+d-add-row,
+d-delete-row,
+d-control-back,
+d-control-next,
+d-control-summary,
+d-control-submit {
+	display: flex;
+	margin: 0.5rem;
+	padding: 0.5rem;
+	border: 0.1rem solid black;
+	border-radius: 0.5rem;
+	background: #fafafa;
+	cursor: pointer;
+}
+
+d-add-row,
+d-delete-row {
+	margin-left: auto;
+    right: 0;
+    
+}
+d-control-back {
+	/*margin-right: auto;*/
+}
+d-control-back::selection,
+d-control-next::selection,
+d-control-summary::selection,
+d-control-submit::selection {
+	background: inherit;
+}
+
+d-control-back:not([active]),
+d-control-next:not([active]),
+d-control-summary:not([active]),
+d-control-submit:not([active]),
+d-page:not([active]),
+d-message:not([active]) {
+	display: none;
+}
+
+d-list[readonly] d-add-row,
+d-list[readonly] d-delete-row,
+d-control-back[disabled],
+d-control-next[disabled],
+d-control-summary[disabled],
+d-control-submit[disabled] {
+	display: none;
+	opacity: 0.7;
+
+	background: #afafaf;
+}

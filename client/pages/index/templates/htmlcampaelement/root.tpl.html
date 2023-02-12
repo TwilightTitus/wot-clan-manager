@@ -1,0 +1,15 @@
+<h1>Campa Manager</h1>
+<div>
+   <jstl jstl-choose>
+      <div class="message is-warn" jstl-when="${!campa}">
+         Aktuell gibt es keine Campa   
+         
+         <button class="is-higlight" @click:delegate="action:open-campa-dialog">Campa starten</button>      
+      </div>
+      <div jstl-otherwise>
+         <h2>${campa.name}  ${new Date(campa.dateRange.start).toLocaleDateString()} - ${new Date(campa.dateRange.end).toLocaleDateString()}</h2>
+
+
+      </div>
+   </jstl>
+</div>
