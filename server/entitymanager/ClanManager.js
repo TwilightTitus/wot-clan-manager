@@ -15,11 +15,21 @@ export const storeClan = async (clan) => {
 }
 
 
-export const getClan = async (accessToken, clanId) => {
+export const getClan = async (clanId) => {
     const connection = await DatabaseClient.connection();
-    const clanData = await connection.query(`select * from ${TABLENAME} where ID = $1`, [clanId]);
+    const result = await connection.query(`select * from ${TABLENAME} where ID = $1`, [clanId]);
+    const clan = result[0];
     await connection.close();
-    return clanData;
+    return clan;
+}
+
+export const getClans = async () => {
+    const connection = await DatabaseClient.connection();
+    const result = await connection.query(`select * from ${TABLENAME}`);
+    const clans = result.rows;
+
+    await connection.close();
+    return clans;
 }
 
 

@@ -23,11 +23,26 @@ export const storeMember = async (member) => {
 	await connection.close();
 };
 
-export const getMembers = async (accoundIds) => {
+export const getMembers = async () => {
 	const connection = await DatabaseClient.connection();
 
+	const result = await connection.query(`select * from ${TABLENAME}`);
+	const members = result.rows;
+
 	await connection.close();
-	return null;
+	return members;
+};
+
+export const getMemberOfClan = async (clanId) => {
+	if(typeof clanId !== "number")	return;
+
+	const connection = await DatabaseClient.connection();
+
+	const result = await connection.query(`select * from ${TABLENAME} where clanId = $1 order by name asc`, [clanId]);
+	const members = result.rows;
+
+	await connection.close();
+	return members;
 };
 
 export const getMember = async (accoundId) => {

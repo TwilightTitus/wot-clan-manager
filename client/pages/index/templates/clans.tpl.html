@@ -1,0 +1,3 @@
+<div jstl-foreach="${data.clans}" jstl-foreach-var="clan" jstl-data="/api/clans" jstl-data-mode="remote" jstl-data-var="data">
+   <x-clan clan-id="${clan.id}" clan-name="${clan.name}" clan-tag="${clan.clantag}"></x-clan>
+</div>

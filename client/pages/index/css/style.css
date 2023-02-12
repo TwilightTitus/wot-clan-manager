@@ -1,0 +1,62 @@
+/*variable*/
+
+:root{
+    --border-definition: #444444 solid 0.125rem;
+}
+
+
+
+/*basic*/
+html {
+    padding: 1rem;
+}
+
+d-route,
+d-route-link {
+    display: block;
+    cursor: pointer;
+}
+
+
+/*Navigation*/
+
+header {
+
+    border-bottom: var(--border-definition);
+
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+header nav ul {
+    list-style: none;
+    display: grid;
+    grid: 1fr / auto-flow;
+    gap: 1rem;
+    align-items: center;
+    justify-content:center;
+}
+
+
+/*table*/
+.table {
+    display: flex;
+    flex-direction: column;
+}
+.table-head,
+.table-row{
+    display: flex;
+    gap: 1rem;
+}
+:is(.table-head,.table-row) > * {
+    padding: 0.3rem 1rem;
+}
+
+.table-head > :first-child {
+    padding-left: 0;
+}
+.table-head > :last-child {
+    padding-right: 0;
+}
+
+.table-row:nth-child(even) {background: #CCC}

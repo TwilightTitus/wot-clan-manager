@@ -1,16 +1,23 @@
 <d-application route="home">
-	<nav>
-		<ul>
-			<li>
-				<d-route name="home" template="/templates/index/home.tpl.html" stateful>Home</d-route>
-			</li>			
-			<li>
-				<d-route name="Campa" template="/templates/index/home.tpl.html" stateful>Campa</d-route>
-			</li>
-			<li>
-				<d-route name="management" template="/templates/index/management.tpl.html" stateful>Management</d-route>
-			</li>
-		</ul>
-	</nav>
-	<d-view></d-view>
+	<header>
+		<nav>
+			<ul>
+				<li>
+					<d-route name="home" template="/templates/index/home.tpl.html" stateful>Home</d-route>
+				</li>
+				<li>
+					<d-route name="clans" template="/templates/index/clans.tpl.html" stateful>Clan Übersicht</d-route>
+				</li>
+				<li>
+					<d-route name="Campa" template="/templates/index/home.tpl.html" stateful>Campa</d-route>
+				</li>
+				<li>
+					<d-route name="management" template="/templates/index/management.tpl.html" stateful>Management</d-route>
+				</li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<d-view></d-view>
+	</main>
 </d-application>

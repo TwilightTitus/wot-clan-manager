@@ -8,7 +8,7 @@ const SERVER = express();
 const sessionConfig = {
 	secret: "was auch immer hier als Password stehen könnte",
 	cookie: {
-		maxAge: 60000,
+		maxAge: 60*60*1000,
 	},
 	resave: true,
 	saveUninitialized: false,

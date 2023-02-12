@@ -4,11 +4,15 @@ import "@default-js/defaultjs-extdom";
 import "@default-js/defaultjs-app-toolbox";
 
 //css
+import "normalize.css";
 import "./css/style.css";
+
+
 
 // custom code
 import "../../js/RegistrateServiceWorker.js";
 import "../../js/LoginComponent.js";
+import "./js/components/index.js";
 
 // logic
 import "./js/Management.js"
