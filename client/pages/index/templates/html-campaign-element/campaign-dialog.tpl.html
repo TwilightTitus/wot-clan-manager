@@ -1,0 +1,35 @@
+<dialog>
+	<h3>Campa erstellen</h3>
+	<div>
+		<d-form>
+			<d-page>
+				<d-field name="id" hidden>
+					<input type="number" />
+				</d-field>
+				<d-field name="name" required>
+					<div>
+						<label>Campa Name</label>
+						<input type="text" />
+					</div>
+				</d-field>
+				<fieldset>
+					<legend>Campa Zeitram</legend>
+					<div>
+						<d-field name="startDate" required>
+							<label>von</label>
+							<input type="date" />
+						</d-field>
+						<d-field name="endDate" required>
+							<label>bis</label>
+							<input type="date" />
+						</d-field>
+					</div>
+				</fieldset>
+			</d-page>
+			<d-control>
+				<button @click:delegate="action:close-campaign-dialog">close</button>
+				<d-control-submit class="button is-higlight" role="button">speichern</d-control-submit>
+			</d-control>
+		</d-form>
+	</div>
+</dialog>

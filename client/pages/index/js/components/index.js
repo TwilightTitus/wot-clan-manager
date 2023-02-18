@@ -1,2 +1,2 @@
 import "./HTMLClanElement.js";
-import "./HTMLCampaElement.js";
+import "./HTMLCampaignsElement.js";

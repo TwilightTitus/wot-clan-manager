@@ -31,7 +31,7 @@ const wrapHandle = (handle) => {
 			await handle(req, res);
 		}catch(e){
 			console.error("internal error", e);
-			res.status(500).send("Something broke! Error: ", e.message);
+			res.status(500).json({error: e.message});
 		}
 	}
 };

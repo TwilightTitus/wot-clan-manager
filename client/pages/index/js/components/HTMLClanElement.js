@@ -7,7 +7,7 @@ export const ATTR__CLAN_ID = "clan-id";
 export const ATTR__CLAN_NAME = "clan-name";
 export const ATTR__CLAN_TAG = "clan-tag";
 
-const TEMPLATE_URL__ROOT = new URL(`${TEMPLATE_BASEPATH}/htmlclanelement/root.tpl.html`, location);
+const TEMPLATE_URL__ROOT = new URL(`${TEMPLATE_BASEPATH}/html-clan-element/root.tpl.html`, location);
 
 class HTMLClanElement extends Component {
 	static get NODENAME() {

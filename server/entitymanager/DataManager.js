@@ -2,6 +2,15 @@ import DatabaseClient from "../utils/DatabaseClient.js";
 
 const TABLENAME = "data";
 
+const resultToData = (result) => {
+    const data = [];
+    for(let row of result.rows){
+        row.payload = JSON.stringify(row.payload);
+        data.push(row);
+    }
+
+	return data;
+};
 
 export const storeData = async ({id=null, type, payload}) => {
 	const connection = await DatabaseClient.connection();
@@ -12,19 +21,17 @@ export const storeData = async ({id=null, type, payload}) => {
 		return await connection.query(`INSERT INTO ${TABLENAME} (type,payload) VALUES ($1, $2)`, [ type, JSON.stringify(payload)]);
 	})();		
 
-	const row = result.rows[0];
-	if(row)
-		row.payload = JSON.parse(row.payload);
+	const data = resultToData(result);
 
 	await connection.commit();
 	await connection.close();
 
-	return row || null;
+	return data[0] || null;
 };
 
 export const deleteData = async (id) => {
 	const connection = await DatabaseClient.connection();
-	await connection.query(`delete from ${TABLENAME} where id = $1`, [id]);
+	await connection.query(`DELETE FROM ${TABLENAME} WHERE id = $1`, [id]);
 
 	await connection.commit();
 	await connection.close();
@@ -34,26 +41,21 @@ export const deleteData = async (id) => {
 export const getDataByType = async (type) => {
 	const connection = await DatabaseClient.connection();
 	const result = await connection.query(`SELECT * FROM ${TABLENAME} WHERE type = $1`, [type]);
-    const row = result.rows[0];
-	if(row)
-		row.payload = JSON.parse(row.payload);
+	const data = resultToData(result);
 
-
-	await connection.commit();
 	await connection.close();
 
-    return row || null;
+    return data[0] || null;
 }
 
 
 export const getData = async (id) => {
 	const connection = await DatabaseClient.connection();
 	const result = await connection.query(`SELECT * FROM ${TABLENAME} WHERE id = $1`, [id]);
-    if(row)
-		row.payload = JSON.parse(row.payload);    
-
-	await connection.commit();
+	
+	const data = resultToData(result);
+	
 	await connection.close();
 
-    return row || null;
+    return data[0] || null;
 }

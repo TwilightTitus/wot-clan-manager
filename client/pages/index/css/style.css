@@ -20,6 +20,10 @@
     padding: 0;
 }
 
+[hidden], [type=hidden], .hidden{
+    display: none;
+}
+
 
 /*basic*/
 html {
