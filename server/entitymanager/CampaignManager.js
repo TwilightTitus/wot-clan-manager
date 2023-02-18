@@ -23,18 +23,18 @@ export const storeCampaign = async ({ id = null, name, startDate, endDate, paylo
                 startDate = $3, 
                 endDate = $4, 
                 payload = $5 
-                WHERE id = $1`,
+                WHERE id = $1 RETURNING *`,
 				[id, name, startDate, endDate, JSON.stringify(payload)],
 			);
 		return await connection.query(
 			`INSERT INTO ${TABLENAME} 
             (name, startDate, endDate, payload) 
             VALUES 
-            ($1, $2, $3, $4)`,
+            ($1, $2, $3, $4) RETURNING *`,
 			[name, startDate, endDate, JSON.stringify(payload)],
 		);
 	})();
-
+	console.log({result});
 	const campaigns = resultToData(result);
 
 	await connection.commit();

@@ -17,8 +17,8 @@ export const storeData = async ({id=null, type, payload}) => {
 	
 	const result = await (async () => {
 		if(id)
-			return await connection.query(`UPDATE ${TABLENAME} SET payload = $2 WHERE id = $1`,[id, JSON.stringify(payload)]);
-		return await connection.query(`INSERT INTO ${TABLENAME} (type,payload) VALUES ($1, $2)`, [ type, JSON.stringify(payload)]);
+			return await connection.query(`UPDATE ${TABLENAME} SET payload = $2 WHERE id = $1 RETURNING *`,[id, JSON.stringify(payload)]);
+		return await connection.query(`INSERT INTO ${TABLENAME} (type,payload) VALUES ($1, $2) RETURNING *`, [ type, JSON.stringify(payload)]);
 	})();		
 
 	const data = resultToData(result);

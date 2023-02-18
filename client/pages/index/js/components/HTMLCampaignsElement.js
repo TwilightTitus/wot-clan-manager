@@ -1,10 +1,10 @@
 import { TEMPLATE_BASEPATH } from "../Constants.js";
 import { Component, define } from "@default-js/defaultjs-html-components";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
+import { getCampaigns, deleteCampaign, storeCampaign } from "../services/CampaignService.js";
 import "@default-js/defaultjs-html-form";
 
-const ENDPOINT = `/api/campaigns`;
-const TEMPLATES_PATH = `${TEMPLATE_BASEPATH}/html-campaign-element`
+const TEMPLATES_PATH = `${TEMPLATE_BASEPATH}/html-campaigns-element`
 export const NODENAME = "x-campaigns";
 
 const TEMPLATE_URL__ROOT = new URL(`${TEMPLATES_PATH}/root.tpl.html`, location);
@@ -22,6 +22,10 @@ class HTMLCampaignsElement extends Component {
 	constructor() {
 		super();
         const root = this.root;
+        root.on("action:delete-campaign", (event) => {
+            event.stopPropagation();
+            
+        });
         root.on("action:create-campaign", (event) => {
             event.stopPropagation();
             this.openCreateDialog();
@@ -36,29 +40,20 @@ class HTMLCampaignsElement extends Component {
 	async init() {
 		if (!this.#initialized) {
 			await this.render();
-
             this.#initialized = true;
 		}
 	}
 
     async render() {
         const template = await Template.load(TEMPLATE_URL__ROOT);
-			await Renderer.render({ container: this.root, template, data: {campaigns: await this.campaignsData()} });
+		await Renderer.render({ container: this.root, template, data: {campaigns: await this.campaignsData()} });
     }
 
     async campaignsData(){
-        if(!this.#campaigns){
-            const response = await fetch(new URL(ENDPOINT, location));
-            this.#campaigns = await response.json();
-            console.log(this.#campaigns)
-        }
+        if(!this.#campaigns)
+            this.#campaigns = await getCampaigns();
 
         return this.#campaigns;
-    }
-
-    async campaignData(id){
-        const campaigns = await campaignsData();
-        return campaigns.find((campaign) => campaign.id == id);
     }
 
     async openCreateDialog() {
@@ -72,16 +67,12 @@ class HTMLCampaignsElement extends Component {
                 event.stopPropagation();
                 const form = event.target;
                 (async () => {
-                    const data = await form.value();
-                    console.log(data);
-
-                    await fetch(new URL("/api/campaigns", location), {
-                        method: "post",
-                        headers: {"content-type": "application/json" },
-                        body: JSON.stringify(data)
-                    });
+                    const campaign = await form.value();
+                    await storeCampaign(campaign);
+                    
                     this.#createDialog.close();
-                    this.#campaigns = null;
+                    this.#campaigns = await getCampaigns();
+
                     await this.render();
                 })();
             })

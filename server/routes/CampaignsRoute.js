@@ -12,7 +12,7 @@ Application.post(`/campaigns`, async ({body}, response) => {
 });
 
 Application.get(`/campaigns/:id`, async (request, response) => {
-    const id = request.getParam("id");
+    const id = request.param("id");
     const campaigns = await getCampaign(id);
 	response.json(campaigns);
 });

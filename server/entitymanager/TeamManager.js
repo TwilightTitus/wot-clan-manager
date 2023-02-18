@@ -22,14 +22,14 @@ export const storeTeam = async ({ id = null, name, type = null, payload = {} }) 
                 name = $2,
                 type = $3,
                 payload = $4 
-                WHERE id = $1`,
+                WHERE id = $1 RETURNING *`,
 				[id, name, type, JSON.stringify(payload)],
 			);
 		return await connection.query(
 			`INSERT INTO ${TABLENAME} 
             (name, type ,payload) 
             VALUES 
-            ($1, $2, $3)`,
+            ($1, $2, $3) RETURNING *`,
 			[name, type, JSON.stringify(payload)],
 		);
 	})();

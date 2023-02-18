@@ -1,10 +1,10 @@
-<h1>Campa Manager</h1>
-<div>
-   <button class="is-higlight" @click:delegate="action:create-campaign">start Campaign</button> 
-
-   <div jstl-foreach="${campaigns}" jstl-foreach-var="campaign">
-      <div>
-         <h3>${campaign.name} (${new Date(campaign.startdate).toLocaleDateString()} - ${new Date(campaign.enddate).toLocaleDateString()})</h3>
-      </div>
-   </div>
-</div>
+<details>
+	<summary>${campaign.name} (${new Date(campaign.startdate).toLocaleDateString()} - ${new Date(campaign.enddate).toLocaleDateString()})</summary>
+   <button @click:delegate="action:create-team"></button>
+	<fieldset>
+		<legend>Teams</legend>
+		<jstl jstl-if="${!payload?.teams}" jstl-foreach="${payload.teams}" jstl-foreach-var="team">
+			<x-team id="${team}"></x-team>
+		</jstl>
+	</fieldset>
+</details>
