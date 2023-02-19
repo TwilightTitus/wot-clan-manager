@@ -25,6 +25,7 @@
 		"dotenv": "^16.0.3",
 		"express": "^4.18.2",
 		"express-session": "^1.17.3",
+		"material-icons": "^1.13.1",
 		"node-fetch": "^3.3.0",
 		"node-schedule": "^2.1.1",
 		"normalize.css": "^8.0.1",

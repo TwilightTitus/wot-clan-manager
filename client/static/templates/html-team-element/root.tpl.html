@@ -1,0 +1,17 @@
+<details>
+	<summary>${team.name}</summary>
+	<button class="is-danger" @click:delegate="action:delete-team">löschen <span class="material-icons">delete</span></button>
+	<button class="is-highlight" @click:delegate="action:edit-team">bearbeiten</button>
+	<fieldset>
+		<legend>Fks</legend>
+		<jstl jstl-if="${!!team?.payload?.fks}" jstl-foreach="${team.payload.fks}" jstl-foreach-var="fk">
+			<div>${fk.id}</div>
+		</jstl>
+	</fieldset>
+	<fieldset>
+		<legend>Member</legend>
+		<jstl jstl-if="${!!team?.payload?.members}" jstl-foreach="${team.payload.members}" jstl-foreach-var="member">
+			<div>${member.id}</div>
+		</jstl>
+	</fieldset>
+</details>

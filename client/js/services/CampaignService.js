@@ -8,12 +8,12 @@ export const getCampaigns = async () => {
     let campaigns = null
     if(CACHE.size == 0){
         campaigns = await getJSON(ENDPOINT);
-        for(let campaign of campaigns)
+        for(const campaign of campaigns)
             CACHE.set(campaign.id, campaign);
     }
     else {
         campaigns = [];
-        for(let [key, campaign] in CACHE)
+        for(const [key, campaign] of CACHE)
             campaigns.push(campaign);
     }
 
@@ -35,10 +35,7 @@ export const getCampaign = async (id) => {
 };
 
 export const storeCampaign = async (campaign) => {
-    if(campaign.id)
-        campaign = await postJSON(`${ENDPOINT}/${campaign.id}`, campaign);
-    else
-        campaign = await postJSON(`${ENDPOINT}`, campaign);
+    campaign = await postJSON(`${ENDPOINT}`, campaign);
     CACHE.set(campaign.id, campaign);
 
     console.log({campaign});

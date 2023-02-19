@@ -7,6 +7,8 @@ CREATE TABLE CLAN (
 CREATE TABLE MEMBER (
     id INTEGER PRIMARY KEY,
     clanid INTEGER,
+    clantag VARCHAR,
+    clanname VARCHAR,
     name VARCHAR NOT NULL,
     role VARCHAR NOT NULL,
     wtr INTEGER NOT NULL   
@@ -15,15 +17,15 @@ CREATE TABLE MEMBER (
 CREATE TABLE TEAM (
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL,
-    type VARCHAR,
+    campaignid INTEGER,
     payload TEXT NOT NULL
 );
 
 CREATE TABLE CAMPAIGN (
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL,
-    startDate DATE NOT NULL,
-    endDate DATE NOT NULL,
+    startdate DATE NOT NULL,
+    enddate DATE NOT NULL,
     payload TEXT NOT NULL
 );
 
@@ -31,4 +33,11 @@ CREATE TABLE DATA (
     id SERIAL PRIMARY KEY,
     type VARCHAR NOT NULL,
     payload TEXT NOT NULL
+);
+
+CREATE TABLE CAMPAIGNREGISTRATION (
+    memberid INTEGER NOT NULL,
+    campaignid INTEGER NOT NULL,
+    payload TEXT NOT NULL,
+    PRIMARY KEY(memberid, campaignid)
 );

@@ -14,7 +14,8 @@
     --border-radius: 0.3rem;
 }
 
-*, ::before, ::after{
+*, ::before, ::after{    
+    font-size: inherit;
     box-sizing: content-box;
     margin: 0;
     padding: 0;
@@ -24,6 +25,12 @@
     display: none;
 }
 
+.material-icons{
+    font-size: inherit !important;
+    line-height: 1.15;
+    vertical-align: bottom;
+}
+
 
 /*basic*/
 html {
@@ -31,6 +38,10 @@ html {
     padding: 1rem;
     color: var(--color-text);
     background-color: var(--color-bg);
+}
+
+body{    
+    font-size: clamp(16px, 2.5vw, 24px);
 }
 
 input, select{
@@ -107,7 +118,7 @@ button, .button{
     --button-border-color-focus: var(--color-border);
     --button-bg-color-focus: var(--color-border);
    
-    
+    font-size: 0.8rem;
     font-weight: 900;
     padding: 0.5rem 1rem;
     border: var(--border-definition);
@@ -124,6 +135,10 @@ button:is(:hover, :focus),
     border-color: var(--button-border-color-focus);
 }
 
+.has-icon-only{
+    padding: 0.2rem 0.3rem;
+}
+
 .is-higlight {
     --button-text-color: var(--color-higlight);
     --button-border-color:  var(--color-higlight);
@@ -131,6 +146,15 @@ button:is(:hover, :focus),
     --button-text-color-focus: var(--color-bg);
     --button-border-color-focus: var(--color-higlight);
     --button-bg-color-focus: var(--color-higlight);
+}
+
+.is-danger {
+    --button-text-color: var(--color-danger);
+    --button-border-color:  var(--color-danger);
+
+    --button-text-color-focus: var(--color-bg);
+    --button-border-color-focus: var(--color-danger);
+    --button-bg-color-focus: var(--color-danger);
 }
 
 /*messages*/

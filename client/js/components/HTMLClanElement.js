@@ -24,6 +24,7 @@ class HTMLClanElement extends Component {
 	}
 
 	async init() {
+		await super.init();
 		if (!this.#initialized) {
 			const template = await Template.load(TEMPLATE_URL__ROOT);
 			await Renderer.render({ container: this.root, template, data: await this.clanData() });

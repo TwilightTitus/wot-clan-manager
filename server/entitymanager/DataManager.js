@@ -5,7 +5,7 @@ const TABLENAME = "data";
 const resultToData = (result) => {
     const data = [];
     for(let row of result.rows){
-        row.payload = JSON.stringify(row.payload);
+        row.payload = row.payload ? JSON.parse(row.payload) : null;
         data.push(row);
     }
 

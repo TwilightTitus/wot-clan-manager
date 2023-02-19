@@ -46,9 +46,7 @@ export const getProfiles = async (accountIds = []) => {
 		let response = await fetch(url);
 		response = await response.json();
 		const { status, data } = response;
-		if (status == "error" || !data) return null;
-
-		
+		if (status == "error" || !data) return null;		
 
 		const profiles = [];
 		for( let profile in data)

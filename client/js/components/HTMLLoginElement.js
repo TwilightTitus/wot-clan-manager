@@ -1,6 +1,6 @@
 import { Component, define } from "@default-js/defaultjs-html-components";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
-import { login, accessToken } from "./services/LoginService.js";
+import { login, accessToken } from "../services/LoginService.js";
 
 export const NODENAME = "x-login-component";
 const ATTR_TEMPLATE = "template";
@@ -24,12 +24,10 @@ class WotLoginComponent extends Component {
 				await Renderer.render({ container: this, data: { user }, template });
 			}
 		}
-
-		await fetch(new URL("/api", location), {
-			headers: {
-				Authorization: `Bearer ${accessToken()}}`,
-			},
-		});
+		else{
+			this.textContent = "kein Zugriff erlaubt";
+		}
+		
 	}
 }
 

@@ -1,4 +1,4 @@
-import { TEMPLATE_BASEPATH } from "../Constants.js";
+import { TEMPLATE_BASEPATH, EVENT__GLOBAL_ACTION_RELOADPARENT } from "../Constants.js";
 import { Component, define } from "@default-js/defaultjs-html-components";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
 import { getCampaigns, deleteCampaign, storeCampaign } from "../services/CampaignService.js";
@@ -16,15 +16,14 @@ class HTMLCampaignsElement extends Component {
 	}
 
 	#initialized = false;
-	#campaigns = null;
     #createDialog;
 
 	constructor() {
 		super();
         const root = this.root;
-        root.on("action:delete-campaign", (event) => {
+        root.on(EVENT__GLOBAL_ACTION_RELOADPARENT, (event) => {
             event.stopPropagation();
-            
+            this.render();            
         });
         root.on("action:create-campaign", (event) => {
             event.stopPropagation();
@@ -38,6 +37,7 @@ class HTMLCampaignsElement extends Component {
 	}
 
 	async init() {
+        await super.init();
 		if (!this.#initialized) {
 			await this.render();
             this.#initialized = true;
@@ -46,14 +46,7 @@ class HTMLCampaignsElement extends Component {
 
     async render() {
         const template = await Template.load(TEMPLATE_URL__ROOT);
-		await Renderer.render({ container: this.root, template, data: {campaigns: await this.campaignsData()} });
-    }
-
-    async campaignsData(){
-        if(!this.#campaigns)
-            this.#campaigns = await getCampaigns();
-
-        return this.#campaigns;
+		await Renderer.render({ container: this.root, template, data: {campaigns: await getCampaigns()} });
     }
 
     async openCreateDialog() {
@@ -71,7 +64,6 @@ class HTMLCampaignsElement extends Component {
                     await storeCampaign(campaign);
                     
                     this.#createDialog.close();
-                    this.#campaigns = await getCampaigns();
 
                     await this.render();
                 })();

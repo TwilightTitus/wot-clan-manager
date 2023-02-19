@@ -3,6 +3,6 @@
    <button class="is-higlight" @click:delegate="action:create-campaign">start Campaign</button> 
 
    <div jstl-foreach="${campaigns}" jstl-foreach-var="campaign">
-      <x-campaign campaign="${campaign.id}"></x-campaign>      
+      <x-campaign campaign-id="${campaign.id}"></x-campaign>      
    </div>
 </div>

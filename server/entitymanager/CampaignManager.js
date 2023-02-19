@@ -6,14 +6,14 @@ const resultToData = (result) => {
     const data = [];
     for(let row of result.rows){
 		console.log({row})
-        row.payload = JSON.stringify(row.payload);
+        row.payload = row.payload ? JSON.parse(row.payload) : null;
         data.push(row);
     }
 
 	return data;
 };
 
-export const storeCampaign = async ({ id = null, name, startDate, endDate, payload = {} }) => {
+export const storeCampaign = async ({ id = null, name, startdate, enddate, payload = {} }) => {
 	const connection = await DatabaseClient.connection();
 	const result = await (async () => {
 		if (id)
@@ -24,14 +24,14 @@ export const storeCampaign = async ({ id = null, name, startDate, endDate, paylo
                 endDate = $4, 
                 payload = $5 
                 WHERE id = $1 RETURNING *`,
-				[id, name, startDate, endDate, JSON.stringify(payload)],
+				[id, name, startdate, enddate, JSON.stringify(payload)],
 			);
 		return await connection.query(
 			`INSERT INTO ${TABLENAME} 
             (name, startDate, endDate, payload) 
             VALUES 
             ($1, $2, $3, $4) RETURNING *`,
-			[name, startDate, endDate, JSON.stringify(payload)],
+			[name, startdate, enddate, JSON.stringify(payload)],
 		);
 	})();
 	console.log({result});

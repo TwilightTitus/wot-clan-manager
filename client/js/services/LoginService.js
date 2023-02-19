@@ -10,6 +10,7 @@ let EXPIREAT;
 const access = async () => {
 	let response = await fetch(new URL(URL_ACCESS, location));
 	if (response.status == 401) return false;
+	if (response.status == 403) return null;
 
 	response = await response.json();
 	const { member, accessToken, expireAt } = response;
@@ -49,6 +50,10 @@ export const fullAccessData = () => {
 		expireAt : EXPIREAT,
 		member : MEMBER
 	}
+}
+
+export const member = () => {
+	return MEMBER;
 }
 
 export const accessToken = () => {

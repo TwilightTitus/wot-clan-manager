@@ -5,14 +5,14 @@ const TABLENAME = "TEAM";
 const resultToData = (result) => {
     const data = [];
     for(let row of result.rows){
-        row.payload = JSON.stringify(row.payload);
+        row.payload = row.payload ? JSON.parse(row.payload) : null;
         data.push(row);
     }
 
 	return data;
 };
 
-export const storeTeam = async ({ id = null, name, type = null, payload = {} }) => {
+export const storeTeam = async ({ id = null, name, campaignid = null, payload = {} }) => {
 	const connection = await DatabaseClient.connection();
 
 	const result = await (async () => {
@@ -20,17 +20,17 @@ export const storeTeam = async ({ id = null, name, type = null, payload = {} }) 
 			return await connection.query(
 				`UPDATE ${TABLENAME} SET 
                 name = $2,
-                type = $3,
+                campaignid = $3,
                 payload = $4 
                 WHERE id = $1 RETURNING *`,
-				[id, name, type, JSON.stringify(payload)],
+				[id, name, campaignid, JSON.stringify(payload)],
 			);
 		return await connection.query(
 			`INSERT INTO ${TABLENAME} 
-            (name, type ,payload) 
+            (name, ,payload) 
             VALUES 
-            ($1, $2, $3) RETURNING *`,
-			[name, type, JSON.stringify(payload)],
+            ($1, $2) RETURNING *`,
+			[name, JSON.stringify(payload)],
 		);
 	})();
 
@@ -51,9 +51,14 @@ export const deleteTeam = async (id) => {
 };
 
 
-export const getTeamsByType = async (type = null) => {
-	const connection = await DatabaseClient.connection();
-	const result = await connection.query(`SELECT * FROM ${TABLENAME} WHERE type = $1`, [type]);
+export const getTeams = async ({campaignid}) => {
+	const connection = await DatabaseClient.connection();	
+	const result = await ( () => {
+		if(typeof campaignid === "number")
+			return connection.query(`SELECT * FROM ${TABLENAME} WHERE campaignid = $1`, [campaignid]);
+		return connection.query(`SELECT * FROM ${TABLENAME}`);
+	})();
+	
     const teams = resultToData(result);
 
 	await connection.close();

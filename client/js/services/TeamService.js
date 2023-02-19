@@ -24,7 +24,7 @@ export const getTeam = async (id) => {
 };
 
 export const storeTeam = async (team) => {
-    team = await postJSON(`${ENDPOINT}/${team.id}`, team );
+    team = await postJSON(`${ENDPOINT}`, team );
     CACHE.set(team.id, team);
 
     return team;

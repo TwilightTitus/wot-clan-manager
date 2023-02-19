@@ -1,5 +1,5 @@
 import Application from "../../Application.js";
-import { APPLICATIONID, BASEPATH__API, WOT_ENDPOINT_LOGIN, WOT_ENDPOINT_LOGIN_REFESH, API_SYSTEM_LOGIN } from "../../Constants.js";
+import { APPLICATIONID, BASEPATH__API, WOT_ENDPOINT_LOGIN, WOT_ENDPOINT_LOGIN_REFESH, API_SYSTEM_LOGIN, CLANIDS } from "../../Constants.js";
 import { getMember } from "../../entitymanager/MemberManager.js";
 import { checkIfUser } from "../../wotservices/ProfileService.js";
 
@@ -34,9 +34,13 @@ const loginUser = async (request, response) => {
 		return response.status(401).end();
 
 	session.expiredAt = expiredAt * 1000;
-	session.member = await getMember(accountId);
-	if(!session.member)
+	const member = session.member = await getMember(accountId);
+	if(!member)
 		return response.status(403).end();
+
+	if(!CLANIDS.includes(member.clanid))
+		return response.status(403).end();
+	
 		
 	response.redirect("/");
 
