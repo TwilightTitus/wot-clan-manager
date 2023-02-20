@@ -1,10 +1,10 @@
 import Application from "../../Application.js";
-import { autorizationToken } from "../../utils/AuthorizationUtil.js";
+import { autorizationToken } from "../../utils/RequestUtils.js";
 import { API_SYSTEM_ACCESS } from "../../Constants.js";
 
 Application.get(API_SYSTEM_ACCESS, async (request, response) => {
 	const { session } = request;
-	const { member, accessToken, accountId, expiredAt } = session;
+	const { member, accessToken, accountId, expiredAt, accessRights } = session;
 
 	if (!member && !accessToken && !accountId) {
 		response.status(401).end();
@@ -22,5 +22,6 @@ Application.get(API_SYSTEM_ACCESS, async (request, response) => {
 		accessToken: session.accessToken,
 		expireAt: session.expiredAt,
 		member,
+		accessRights
 	});
 });

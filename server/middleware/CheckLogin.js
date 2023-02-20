@@ -1,5 +1,5 @@
 import Application from "../Application.js";
-import { autorizationToken } from "../utils/AuthorizationUtil.js";
+import { autorizationToken } from "../utils/RequestUtils.js";
 import { LOGIN_CHECK__IGRNORED_PATHS } from "../Constants.js";
 
 Application.use(async (request, response, next) => {

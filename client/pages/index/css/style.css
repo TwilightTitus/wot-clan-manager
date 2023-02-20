@@ -14,7 +14,9 @@
     --border-radius: 0.3rem;
 }
 
-*, ::before, ::after{    
+*, ::before, ::after{  
+    color: var(--color-text);
+    background-color: var(--color-bg);
     font-size: inherit;
     box-sizing: content-box;
     margin: 0;
@@ -44,7 +46,7 @@ body{
     font-size: clamp(16px, 2.5vw, 24px);
 }
 
-input, select{
+input:not([type="checkbox"], [type="radio"]), select{
     display: block;
     /*width = 100% - [padding left-right] - [border left-right]*/
     width: calc(100% - 2 * 0.225rem - 2 * var(--border-size) );
@@ -52,6 +54,11 @@ input, select{
     border: var(--border-definition);
     border-radius: var(--border-radius);
     padding: 0.125rem 0.225rem;
+}
+
+input:is([type="checkbox"], [type="radio"]){
+    margin-right: 0.225rem;
+    vertical-align: middle;
 }
 
 fieldset{
@@ -87,6 +94,19 @@ header nav ul {
     align-items: center;
     justify-content:center;
 }
+
+/*text*/
+:is(span, p, label, .text).small {
+    font-size: calc(1em - 33%);
+}
+
+
+:is(span, p, label, .text).is-danger{
+    --color-text: var(--color-danger);
+}
+
+
+
 
 /*dialog*/
 dialog{
@@ -135,11 +155,11 @@ button:is(:hover, :focus),
     border-color: var(--button-border-color-focus);
 }
 
-.has-icon-only{
+:is(button, .button).has-icon-only{
     padding: 0.2rem 0.3rem;
 }
 
-.is-higlight {
+:is(button, .button).is-higlight {
     --button-text-color: var(--color-higlight);
     --button-border-color:  var(--color-higlight);
 
@@ -148,7 +168,7 @@ button:is(:hover, :focus),
     --button-bg-color-focus: var(--color-higlight);
 }
 
-.is-danger {
+:is(button, .button).is-danger {
     --button-text-color: var(--color-danger);
     --button-border-color:  var(--color-danger);
 

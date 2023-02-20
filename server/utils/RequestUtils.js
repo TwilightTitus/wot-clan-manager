@@ -9,3 +9,11 @@ export const autorizationToken = (request) => {
 
     return token;
 }
+
+export const currentMember = (request) => {
+    return request.session.member;
+}
+
+export const accessRights = (request) => {
+    return request.session.accessRights;
+}

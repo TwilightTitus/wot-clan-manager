@@ -1,0 +1,35 @@
+<dialog>
+    <d-form>
+        <d-page>            
+            <jstl jstl-foreach="${days}" jstl-foreach-var="day" jstl-foreach-status="status">
+                <d-container name="day${status.number}">                  
+                    <fieldset>
+                        <legend>Tag ${status.number} (${day.toLocaleDateString()})</legend>
+                        <d-field name="available" required>
+                            <label>Anwesenheit?</label>
+                            <div>
+                                <label><input type="radio" name="day${status.number}-available" value="full">voll</label>
+                                <label><input type="radio" name="day${status.number}-available" value="partially">teilweise</label>
+                                <label><input type="radio" name="day${status.number}-available" value="none">gar nicht</label>
+                            </div>
+                        </d-field>
+                        <d-field name="von" required condition="day${status.number}.available == 'partially'">
+                            <label>von</label>
+                            <input type="time" min="19:00" value="19:00">
+                        </d-field>
+                        <d-field name="bis" required condition="day${status.number}.available == 'partially'">
+                            <label>bis</label>
+                            <input type="time" value="01:30">
+                        </d-field>
+                    </fieldset>
+                </d-container>
+
+            </jstl>
+
+        </d-page>
+        <d-control>
+            <button @click:delegate="action:close-registration-dialog">close</button>
+            <d-control-submit class="button is-higlight" role="button">speichern</d-control-submit>
+        </d-control>
+    </d-form>
+</dialog>

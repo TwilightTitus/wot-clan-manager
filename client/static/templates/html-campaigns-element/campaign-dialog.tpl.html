@@ -18,10 +18,16 @@
 						<d-field name="startdate" required>
 							<label>von</label>
 							<input type="date" />
+							<div>
+								<d-validation class="text small is-danger" condition="${formUtils.date.greaterEqualNow($value)}">Das Start-Datum kann nicht in der Vergangenheit liegen!</d-validation>
+							</div>
 						</d-field>
 						<d-field name="enddate" required>
 							<label>bis</label>
 							<input type="date" />
+							<div>
+								<d-validation class="text small is-danger" condition="${formUtils.date.greater($value, startdate)}">Das End-Datum muss größer als das Start-Datum sein!</d-validation>
+							</div>
 						</d-field>
 					</div>
 				</fieldset>

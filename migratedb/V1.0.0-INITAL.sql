@@ -35,9 +35,10 @@ CREATE TABLE DATA (
     payload TEXT NOT NULL
 );
 
-CREATE TABLE CAMPAIGNREGISTRATION (
-    memberid INTEGER NOT NULL,
+CREATE TABLE CAMPAIGNREGISTRATION (    
     campaignid INTEGER NOT NULL,
+    memberid INTEGER NOT NULL,
+    fullyavailable BOOLEAN NOT NULL,
     payload TEXT NOT NULL,
-    PRIMARY KEY(memberid, campaignid)
+    PRIMARY KEY(campaignid, memberid)
 );

@@ -11,8 +11,10 @@ import "./css/form.css";
 
 
 // custom code
+import "../../js/javascript-extentions/index.js";
 import "../../js/RegistrateServiceWorker.js";
 import "../../js/components/index.js";
+import "./js/FormUtils.js";
 
 // logic
 import "./js/Management.js"
