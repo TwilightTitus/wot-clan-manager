@@ -123,6 +123,11 @@ class HTMLCampaignElement extends Component {
 				dialog.remove();
 			})();
 		});
+		dialog.on("action:close-registration-dialog", (event) => {
+			event.stopPropagation();
+			dialog.hide();
+			dialog.remove();
+		});
 
 		dialog.showModal();
 	}

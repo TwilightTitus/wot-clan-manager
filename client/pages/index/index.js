@@ -15,6 +15,7 @@ import "../../js/javascript-extentions/index.js";
 import "../../js/RegistrateServiceWorker.js";
 import "../../js/components/index.js";
 import "./js/FormUtils.js";
+import "./js/DateFormat.js";
 
 // logic
 import "./js/Management.js"
