@@ -14,17 +14,20 @@ const resultToData = (result) => {
 };
 
 export const storeCampaignRegistration = async ({ campaignid, memberid, fullyavailable = false, availability = {} }) => {
+	console.log("store registration", { campaignid, memberid, fullyavailable, availability })
 	const connection = await DatabaseClient.connection();
 	const result = await (async () => {
-		if (id)
-			return await connection.query(
+		const result = await connection.query(
 				`UPDATE ${TABLENAME} SET                  
                 fullyavailable = $3, 
                 availability = $4 
-                WHERE campaignid = $1 and memberid = $2 RETURNING *`,
+                WHERE campaignid = $1 AND memberid = $2 RETURNING *`,
 				[campaignid, memberid, fullyavailable, JSON.stringify(availability)],
 			);
-		return await connection.query(
+		if(result.rowCount == 1)
+			return result;
+		
+			return connection.query(
 			`INSERT INTO ${TABLENAME} 
             (campaignid, memberid, fullyavailable, availability) 
             VALUES 

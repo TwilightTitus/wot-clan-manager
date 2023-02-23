@@ -11,26 +11,26 @@ Application.get(ENDPOINT, async (request, response) => {
     if(!accessRights(request).management)
         return response.status(403).json({error: "no management rights"});
         
-	const campaignId = request.param(PATHPARAM__CAMPAIGNID);
-	const registrations = await getCampaignRegistrations(campaignId);
+	const campaign = request.params[PATHPARAM__CAMPAIGNID];		
+	const registrations = await getCampaignRegistrations(campaign);
 	response.json(registrations);
 });
 
 Application.post(ENDPOINT, async (request, response) => {
-	const campaignId = request.param(PATHPARAM__CAMPAIGNID);
-	const memberId = currentMember(request).id;
+	const campaign = request.params[PATHPARAM__CAMPAIGNID];
+	const member = currentMember(request).id;
 	const body = request.body;
 
-	body.campaignId = campaignId;
-	body.memberId = memberId;
+	body.campaignid = campaign;
+	body.memberid = member;
 	const registration = await storeCampaignRegistration(body);
 	response.json(registration);
 });
 
 Application.delete(ENDPOINT, async (request, response) => {
-	const campaignId = request.param(PATHPARAM__CAMPAIGNID);
-	const memberId = request.session.member.id;
-	await deleteCampaignRegistration(campaignId, memberId);
+	const campaign = request.params[PATHPARAM__CAMPAIGNID];
+	const member = request.session.member.id;
+	await deleteCampaignRegistration(campaign, member);
 	response.json();
 });
 
@@ -38,9 +38,9 @@ Application.get(ENDPOINT_WITH_MEMBERID, async (request, response) => {
 	if(!accessRights(request).management)
         return response.status(403).json({error: "no management rights"});
     
-	const campaignId = request.param(PATHPARAM__CAMPAIGNID);
-	const memberId = request.param(PATHPARAM__MEMBERID);
-	const registration = await getCampaignRegistration(campaignId, memberId);
+	const campaign = request.params[PATHPARAM__CAMPAIGNID];
+	const member = request.params[PATHPARAM__MEMBERID];
+	const registration = await getCampaignRegistration(campaign, member);
 	response.json(registration);
 });
 
@@ -48,8 +48,8 @@ Application.delete(ENDPOINT_WITH_MEMBERID, async (request, response) => {
 	if(!accessRights(request).management)
         return response.status(403).json({error: "no management rights"});
     
-	const campaignId = request.param(PATHPARAM__CAMPAIGNID);
-	const memberId = request.param(PATHPARAM__MEMBERID);
-	const registration = await getCampaignRegistration(campaignId, memberId);
+	const campaign = request.params[PATHPARAM__CAMPAIGNID];
+	const member = request.params[PATHPARAM__MEMBERID];
+	const registration = await getCampaignRegistration(campaign, member);
 	response.json(registration);
 });

@@ -1,7 +1,7 @@
 <dialog>
     <d-form>
-        <d-page>            
-            <jstl jstl-foreach="${days}" jstl-foreach-var="day" jstl-foreach-status="status">               
+        <d-page class="container">
+            <jstl jstl-foreach="${days}" jstl-foreach-var="day" jstl-foreach-status="status">                     
                 <d-container name="day${status.number}">                  
                     <fieldset class="container">
                         <legend>Tag ${status.number} (${DateFormats.toDate(day)})</legend>                       

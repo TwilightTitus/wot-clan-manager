@@ -2,6 +2,7 @@ import { TEMPLATE_BASEPATH, EVENT__GLOBAL_ACTION_RELOADPARENT } from "../Constan
 import { Component, define } from "@default-js/defaultjs-html-components";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
 import { getCampaign, deleteCampaign, storeCampaign } from "../services/CampaignService.js";
+import { getRegistrations, getMyRegistration, getRegistrationByMember, storeRegistration } from "../services/CampaignRegistrationService.js";
 import { storeTeam } from "../services/TeamService.js";
 import "@default-js/defaultjs-html-form";
 
@@ -114,16 +115,27 @@ class HTMLCampaignElement extends Component {
 		const dialog = result.content[0];
 		const form = dialog.find("d-form").first();
 
-		dialog.on("d-form:submit", (event) => {
+		form.on("d-form-submit", (event) => {
+			console.log(event);
 			event.stopPropagation();
 			(async () => {
-				console.log(await form.value());
-
+				const registration = await form.value();
+				console.log(registration);
+				await storeRegistration(this.campaignId, {
+					fullyavailable : (() => {
+						for(const day in registration){
+							if(registration[day] == "full")
+								return false;
+							return true;
+						}					
+					})(),
+					availability: registration
+				});
 				dialog.hide();
 				dialog.remove();
 			})();
 		});
-		dialog.on("action:close-registration-dialog", (event) => {
+		form.on("action:close-registration-dialog", (event) => {
 			event.stopPropagation();
 			dialog.hide();
 			dialog.remove();
