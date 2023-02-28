@@ -1,15 +1,33 @@
-<dialog>
+<dialog is="x-dialog">
+    <h3>Team bearbeiten</h3>
     <d-form>
         <d-page>
-            <d-field name="id" hidden>
+            <d-field name="id" required hidden>
                 <input type="number">
             </d-field>
-            <d-field name="name" hidden>
-                <input type="name">
+            <d-field name="campaignid" hidden>
+                <input type="number">
             </d-field>
-
-
+            <div>
+                <label>Name</label>
+                <d-field name="name" required>
+                    <input type="name">
+                </d-field>
+            </div>
+            <d-container class="container" name="payload">
+                <fieldset>
+                    <legend>FK's</legend>
+                    <x-campaign-member-search-field name="fks" campaign-id="${team.campaignid}"></x-campaign-member-search-field>
+                </fieldset>
+                <fieldset>
+                    <legend>Member</legend>
+                    <x-campaign-member-search-field name="members" campaign-id="${team.campaignid}"></x-campaign-member-search-field>
+                </fieldset>
+            </d-container>
         </d-page>
-
+        <d-control class="container is-horizontal">
+            <button close-modal>close</button>
+            <d-control-submit class="button is-highlight">Speichern</d-control-submit>
+        </d-control>
     </d-form>
 </dialog>

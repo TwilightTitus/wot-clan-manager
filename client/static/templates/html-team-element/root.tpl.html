@@ -4,14 +4,16 @@
 	<button class="is-highlight" @click:delegate="action:edit-team">bearbeiten</button>
 	<fieldset>
 		<legend>Fks</legend>
-		<jstl jstl-if="${!!team?.payload?.fks}" jstl-foreach="${team.payload.fks}" jstl-foreach-var="fk">
-			<div>${fk.id}</div>
-		</jstl>
+		<div class="container" jstl-if="${!!team?.payload?.fks}" jstl-foreach="${team.payload.fks}" jstl-foreach-var="fk">
+			<x-member member-id="${fk}" jstl-if="${typeof team.campaignid === `undefined`}"></x-member>
+			<x-campaign-member campaign-id="${team.campaignid}" member-id="${fk}" jstl-if="${typeof team.campaignid === `number`}"></x-campaign-member>
+		</div>
 	</fieldset>
 	<fieldset>
 		<legend>Member</legend>
-		<jstl jstl-if="${!!team?.payload?.members}" jstl-foreach="${team.payload.members}" jstl-foreach-var="member">
-			<div>${member.id}</div>
-		</jstl>
+		<div class="container" jstl-if="${!!team?.payload?.members}" jstl-foreach="${team.payload.members}" jstl-foreach-var="member">
+			<x-member member-id="${member}" jstl-if="${typeof  team.campaignid === `undefined`}"></x-member>
+			<x-campaign-member campaign-id="${ team.campaignid}" member-id="${member}" jstl-if="${typeof team.campaignid === `number`}"></x-campaign-member>
+		</div>
 	</fieldset>
 </details>

@@ -12,7 +12,7 @@ const ATTR__CAMPAIGNID = "campaign-id";
 
 const TEMPLATE_ROOT = Template.load(new URL(`${TEMPLATES_PATH}/root.tpl.html`, location));
 const TEMPLATE_REGISTRATION = Template.load(new URL(`${TEMPLATES_PATH}/registration.tpl.html`, location));
-
+const TEMPLATE_REGISTRATIONS = Template.load(new URL(`${TEMPLATES_PATH}/registrations.tpl.html`, location));
 
 const getDatesBetweenTwoDates = (a, b) => {
 	a = a instanceof Date ? a : new Date(a);
@@ -20,8 +20,7 @@ const getDatesBetweenTwoDates = (a, b) => {
 
 	const days = Math.ceil(Math.abs(a - b) / (1000 * 60 * 60 * 24));
 	const dates = [];
-	for (let i = 0; i < days; i++)
-		dates.push(a.addDays(i));
+	for (let i = 0; i < days; i++) dates.push(a.addDays(i));
 
 	return dates;
 };
@@ -40,6 +39,10 @@ class HTMLCampaignElement extends Component {
 			event.stopPropagation();
 			this.render();
 		});
+		root.on("action:show-registrations", (event) => {
+			event.stopPropagation();
+			this.showRegistrations();
+		});
 		root.on("action:delete-campaign", (event) => {
 			event.stopPropagation();
 			(async () => {
@@ -50,9 +53,9 @@ class HTMLCampaignElement extends Component {
 		root.on("action:create-team", (event) => {
 			event.stopPropagation();
 			(async () => {
-				const campaignId = this.campaignId;
-				const team = await storeTeam({ name: "neues Team", campaignid: campaignId });
-				const campaign = await getCampaign(campaignId);
+				const campaignid = this.campaignId;
+				const team = await storeTeam({ name: "neues Team", campaignid });
+				const campaign = await getCampaign(campaignid);
 				campaign.payload = campaign.payload || {};
 				campaign.payload.teams = campaign.payload.teams || [];
 				const teams = campaign.payload.teams;
@@ -100,16 +103,16 @@ class HTMLCampaignElement extends Component {
 		const template = await TEMPLATE_REGISTRATION;
 		const campaign = await getCampaign(this.campaignId);
 
-	const data= {
-		campaign,
-		days: getDatesBetweenTwoDates(campaign.startdate, campaign.enddate),
-	};
+		const data = {
+			campaign,
+			days: getDatesBetweenTwoDates(campaign.startdate, campaign.enddate),
+		};
 
 		const result = await Renderer.render({
 			template,
 			container: this.root,
 			data,
-			mode: "append"			
+			mode: "append",
 		});
 
 		const dialog = result.content[0];
@@ -120,17 +123,14 @@ class HTMLCampaignElement extends Component {
 			event.stopPropagation();
 			(async () => {
 				const registration = await form.value();
-				console.log(registration);
-				await storeRegistration(this.campaignId, {
-					fullyavailable : (() => {
-						for(const day in registration){
-							if(registration[day] == "full")
-								return false;
-							return true;
-						}					
-					})(),
-					availability: registration
-				});
+				const availability = [];
+				let fullyavailable = true;
+				for (const day in registration) {
+					if (fullyavailable && registration[day].available != "full") fullyavailable = false;
+					availability.push(registration[day]);
+				}
+
+				await storeRegistration(this.campaignId, { fullyavailable, availability });
 				dialog.hide();
 				dialog.remove();
 			})();
@@ -138,6 +138,18 @@ class HTMLCampaignElement extends Component {
 		form.on("action:close-registration-dialog", (event) => {
 			event.stopPropagation();
 			dialog.hide();
+			dialog.remove();
+		});
+
+		dialog.showModal();
+	}
+
+	async showRegistrations() {
+		const template = await TEMPLATE_REGISTRATIONS;
+		const registrations = await getRegistrations(this.campaignId);
+		const result = await Renderer.render({ container: this, template, data: { registrations }, mode: "append" });
+		const dialog = result.content[0];
+		dialog.on("close", () => {
 			dialog.remove();
 		});
 

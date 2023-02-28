@@ -1,5 +1,5 @@
 import {getJSON, postJSON, deleteJSON} from "./ServiceUtils.js";
-import { member } from "../../../../js/services/LoginService.js";
+import { member } from "./LoginService.js";
 
 const ENDPOINT = `/api/members`;
 

@@ -1,13 +1,14 @@
 /*variable*/
 
 :root{
-    --color-bg: #FAFAFA;
+    --color-bg: #e8e8e8;
     --color-text: #444444;    
     --color-border: #A4A4A4;
-    --color-higlight: #230b8f;
+    --color-highlight: #0d5f14;
     --color-danger: #830e01d4;
     --color-warn: #ab6a02;
     --color-info: #686666d4;
+    --color-selected: #547cf4;
 
     --border-size: 0.125rem;
     --border-definition: var(--color-border) solid var(--border-size);
@@ -16,7 +17,7 @@
 
 *, ::before, ::after{  
     color: var(--color-text);
-    background-color: var(--color-bg);
+    background-color: transparent;
     font-size: inherit;
     box-sizing: content-box;
     margin: 0;
@@ -27,10 +28,12 @@
     display: none;
 }
 
-.material-icons{
+.material-icons{    
+    color: inherit;
     font-size: inherit !important;
     line-height: 1.15;
     vertical-align: bottom;
+    background-color: transparent;
 }
 
 
@@ -44,6 +47,7 @@ html {
 
 body{    
     font-size: clamp(16px, 2.5vw, 24px);
+    background-color: var(--color-bg);
 }
 
 input:not([type="checkbox"], [type="radio"]), select{
@@ -107,20 +111,23 @@ header nav ul {
 
 /*Layout*/
 .container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid: auto-flow 1fr / 1fr;
     gap: 1rem
 }
 
 .container.is-horizontal {
-    flex-direction: row;
+    grid: 1fr / auto-flow 1fr;
 }
 
-
+.with-max-content{
+    width: max-content;
+}
 
 
 /*dialog*/
 dialog{
+    background-color: var(--color-bg);
     border: var(--border-definition);
     border-radius: var(--border-radius);
     width: min(90vw,50rem);
@@ -129,6 +136,10 @@ dialog{
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+dialog::backdrop {
+    background: rgba(50, 50, 50, 0.8);
 }
 
 dialog:not([open]){
@@ -170,13 +181,13 @@ button:is(:hover, :focus),
     padding: 0.2rem 0.3rem;
 }
 
-:is(button, .button).is-higlight {
-    --button-text-color: var(--color-higlight);
-    --button-border-color:  var(--color-higlight);
+:is(button, .button).is-highlight {
+    --button-text-color: var(--color-highlight);
+    --button-border-color:  var(--color-highlight);
 
     --button-text-color-focus: var(--color-bg);
-    --button-border-color-focus: var(--color-higlight);
-    --button-bg-color-focus: var(--color-higlight);
+    --button-border-color-focus: var(--color-highlight);
+    --button-bg-color-focus: var(--color-highlight);
 }
 
 :is(button, .button).is-danger {
@@ -229,4 +240,44 @@ tr:nth-child(even) {background: #CCC}
     max-width: max-content;
 }
 
+
+/* registration availability*/  
+.is-availability-markers{
+    gap: 0.125rem;
+    position: relative;
+}
+.availability-marker {
+    height: 100%;
+} 
+
+.availability-marker.is-none{
+   
+    background-color: red;
+}
+.availability-marker.is-full{
+    background-color: green;
+}
+
+.availability-marker.is-partially{
+    background-color: orange;
+}
+
+/* team editor */
+.is-selectable{
+    display: flex;
+}
+.is-selectable > * {
+    width: 100%;
+}
+
+.is-selectable .is-selected-marker{
+    width: max-content;
+    cursor: pointer;
+}
+.is-selectable:not(.is-selected) .is-selected-marker.is-selected{
+    display: none;
+}
+.is-selectable.is-selected .is-selected-marker:not(.is-selected){
+    display: none;
+}
 

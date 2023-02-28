@@ -3,6 +3,7 @@
 	<button class="is-danger" @click:delegate="action:delete-campaign">Kamagne löschen <span class="material-icons">delete</span></button>
 	<button class="is-highlight" @click:delegate="action:create-team">Neues Team</button>
 	<button class="is-highlight" @click:delegate="action:member-registrate">anmelden</button>
+	<button class="is-highlight" @click:delegate="action:show-registrations">Anmeldungen anzeigen</button>
 	<fieldset>
 		<legend>Teams</legend>
 		<jstl jstl-if="${!!campaign?.payload?.teams}" jstl-foreach="${campaign.payload.teams}" jstl-foreach-var="team">

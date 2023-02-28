@@ -27,10 +27,10 @@ export const storeTeam = async ({ id = null, name, campaignid = null, payload = 
 			);
 		return await connection.query(
 			`INSERT INTO ${TABLENAME} 
-            (name, payload) 
+            (name, campaignid, payload) 
             VALUES 
-            ($1, $2) RETURNING *`,
-			[name, JSON.stringify(payload)],
+            ($1, $2, $3) RETURNING *`,
+			[name, campaignid, JSON.stringify(payload)],
 		);
 	})();
 

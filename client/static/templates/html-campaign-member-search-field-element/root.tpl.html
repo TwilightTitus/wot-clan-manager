@@ -1,0 +1,7 @@
+<div class="container">
+    <jstl jstl-foreach="${memberids}" jstl-foreach-var="memberid">
+        <x-member member-id="${memberid}" jstl-if="${typeof campaignid === `undefined`}"></x-member>
+        <x-campaign-member campaign-id="${campaignid}" member-id="${memberid}" jstl-if="${typeof campaignid === `number`}"></x-campaign-member>
+    </jstl>    
+    <button class="is-highlight with-max-content" @Click:delegate="action:show-selection-dialog">Auswählen <span class="material-icons">add_circle</span></button>
+</div>

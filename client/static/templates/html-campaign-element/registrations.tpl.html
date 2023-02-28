@@ -1,0 +1,8 @@
+<dialog is="x-dialog">
+    <div class="container" jstl-foreach="${registrations}" jstl-foreach-var="registration">
+        <x-campaign-member campaign-id="${registration.campaignid}" member-id="${registration.memberid}"></x-campaign-member>
+    </div>
+    <div class="container">
+        <button close-modal>schließen</button>
+    </div>
+</dialog>

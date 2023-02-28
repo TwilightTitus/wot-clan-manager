@@ -17,7 +17,7 @@ export const getTeam = async (id) => {
     if(CACHE.has(id))
         return CACHE.get(id);
 
-    const team = getJSON(`${ENDPOINT}/${id}`);
+    const team = await getJSON(`${ENDPOINT}/${id}`);
     CACHE.set(team.id, team);
 
     return team;

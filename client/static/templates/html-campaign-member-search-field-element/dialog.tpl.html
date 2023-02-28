@@ -1,0 +1,13 @@
+<dialog is="x-dialog">
+    <div class="container" jstl-foreach="${registrations}" jstl-foreach-var="registration">
+        <div class="container is-horizontal is-selectable ${memberids.has(registration.memberid) ? 'is-selected' : ''}" @click:toggleClass:is-selected="">            
+            <span class="material-icons is-selected-marker is-selected">check_box</span>
+            <span class="material-icons is-selected-marker">check_box_outline_blank</span>
+            <x-campaign-member campaign-id="${registration.campaignid}" member-id="${registration.memberid}"></x-campaign-member>
+        </div>
+    </div>
+    <div class="container is-horizontal">
+        <button close-modal>close</button>
+        <button @click:delegate="action:save-selection">speichern</button>
+    </div>
+</dialog>

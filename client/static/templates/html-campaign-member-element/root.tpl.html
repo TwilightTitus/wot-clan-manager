@@ -1,0 +1,10 @@
+<div class="container is-horizontal">
+	<div class="container is-horizontal is-availability-markers" jstl-foreach="${registration.availability}" jstl-foreach-var="avail" jstl-foreach-status="status" jstl-if="${!registration.fullyavalibility}">
+		<jstl jstl-choose>
+			<div class="availability-marker is-none" jstl-when="${avail.available == 'none'}"></div>
+			<div class="availability-marker is-full" jstl-when="${avail.available == 'full'}"></div>
+			<div class="availability-marker is-partially" jstl-otherwise title="${avail.from} - ${avail.to}"></div>
+		</jstl>
+	</div>
+	<x-member member-id="${registration.memberid}"></x-member>
+</div>

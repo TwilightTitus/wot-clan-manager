@@ -1,8 +1,7 @@
 import { TEMPLATE_BASEPATH, EVENT__GLOBAL_ACTION_RELOADPARENT } from "../Constants.js";
 import { Component, define } from "@default-js/defaultjs-html-components";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
-import { getMembers, getMember  } from "../services/MemberService.js";
-import "@default-js/defaultjs-html-form";
+import { getMember } from "../services/MemberService.js";
 
 const TEMPLATES_PATH = `${TEMPLATE_BASEPATH}/html-member-element`
 export const NODENAME = "x-member";
@@ -37,7 +36,8 @@ class HTMLMemberElement extends Component {
 
     async render() {
         const template = await TEMPLATE_ROOT;
-		await Renderer.render({ container: this.root, template, data: {member: await getMember(this.memberId)} });
+		const member = await getMember(this.memberId);
+		await Renderer.render({ container: this.root, template, data: {member} });
     }
 }
 
