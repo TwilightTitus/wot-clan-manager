@@ -85,11 +85,9 @@ class HTMLTeamElement extends Component {
 		});
 
 		const form = dialog.find("d-form").first();
-		setTimeout(async () => {			
-			await form.ready;
-			await form.value(team);
-			dialog.showModal();
-		}, 250);
+		await form.ready;
+		await form.value(team);
+		dialog.showModal();
 	}
 }
 
