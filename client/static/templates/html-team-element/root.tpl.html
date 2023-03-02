@@ -1,19 +1,20 @@
-<details>
-	<summary>${team.name}</summary>
-	<button class="is-danger" @click:delegate="action:delete-team">löschen <span class="material-icons">delete</span></button>
-	<button class="is-highlight" @click:delegate="action:edit-team">bearbeiten</button>
+<details ?open="${open}" open @toggle:delegate="action:toogle-details">
+	<summary>${team.name} 
+		<button class="is-danger" @click:delegate="action:delete-team" jstl-if="${accessRights.management}">löschen <span class="material-icons">delete</span></button>
+		<button class="is-highlight" @click:delegate="action:edit-team" jstl-if="${accessRights.management}">bearbeiten</button>
+	</summary>
 	<fieldset>
 		<legend>Fks</legend>
 		<div class="container" jstl-if="${!!team?.payload?.fks}" jstl-foreach="${team.payload.fks}" jstl-foreach-var="fk">
-			<x-member member-id="${fk}" jstl-if="${typeof team.campaignid === `undefined`}"></x-member>
-			<x-campaign-member campaign-id="${team.campaignid}" member-id="${fk}" jstl-if="${typeof team.campaignid === `number`}"></x-campaign-member>
+			<x-member member-id="${fk}" jstl-if="${!accessRights.management || typeof team.campaignid === `undefined`}"></x-member>
+			<x-campaign-member campaign-id="${team.campaignid}" member-id="${fk}" jstl-if="${accessRights.management && typeof team.campaignid === `number`}"></x-campaign-member>
 		</div>
 	</fieldset>
 	<fieldset>
 		<legend>Member</legend>
 		<div class="container" jstl-if="${!!team?.payload?.members}" jstl-foreach="${team.payload.members}" jstl-foreach-var="member">
-			<x-member member-id="${member}" jstl-if="${typeof  team.campaignid === `undefined`}"></x-member>
-			<x-campaign-member campaign-id="${ team.campaignid}" member-id="${member}" jstl-if="${typeof team.campaignid === `number`}"></x-campaign-member>
+			<x-member member-id="${member}" jstl-if="${!accessRights.management || typeof team.campaignid === `undefined`}"></x-member>
+			<x-campaign-member campaign-id="${ team.campaignid}" member-id="${member}" jstl-if="${accessRights.management && typeof team.campaignid === `number`}"></x-campaign-member>
 		</div>
 	</fieldset>
 </details>

@@ -13,8 +13,8 @@
                                 <label><input type="radio" name="day${status.number}-available" value="none">gar nicht</label>
                             </div>
                         </d-field>
-                        <div class="container is-horizontal">
-                            <d-field class="container is-horizontal" name="from" required condition="day${status.number}.available == 'partially'">
+                        <div class="container is-horizontal with-max-content">
+                            <d-field class="container is-horizontal with-max-content" name="from" required condition="day${status.number}.available == 'partially'">
                                 <label>von</label>
                                 <select>
                                     <option selected>19:00</option>
@@ -24,7 +24,7 @@
                                     <option>23:00</option>
                                 </select>                        
                             </d-field>
-                            <d-field class="container is-horizontal" name="to" required condition="day${status.number}.available == 'partially'">
+                            <d-field class="container is-horizontal with-max-content" name="to" required condition="day${status.number}.available == 'partially'">
                                 <label>bis</label>
                                 <select>
                                     <option>22:00</option>

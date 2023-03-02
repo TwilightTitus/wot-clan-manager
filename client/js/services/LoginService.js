@@ -3,6 +3,7 @@ const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 
 let isloggedIn = false;
+let ACCESSRIGHT = {};
 let MEMBER;
 let ACCESSTOKEN;
 let EXPIREAT;
@@ -13,10 +14,11 @@ const access = async () => {
 	if (response.status == 403) return null;
 
 	response = await response.json();
-	const { member, accessToken, expireAt } = response;
+	const { member, accessToken, expireAt, accessRights } = response;
 	MEMBER = member;
 	ACCESSTOKEN = accessToken;
 	EXPIREAT = expireAt;
+	ACCESSRIGHT = accessRights;
 
     scheduleNexAccessTokenRefresh();
 
@@ -48,8 +50,13 @@ export const fullAccessData = () => {
 	return {
 		accessToken :ACCESSTOKEN,
 		expireAt : EXPIREAT,
-		member : MEMBER
+		member : MEMBER,
+		accessRights: ACCESSRIGHT
 	}
+}
+
+export const accessRights = () => {
+	return  ACCESSRIGHT;
 }
 
 export const member = () => {

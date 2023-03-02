@@ -2,6 +2,7 @@ import { TEMPLATE_BASEPATH, EVENT__GLOBAL_ACTION_RELOADPARENT } from "../Constan
 import { Component, define } from "@default-js/defaultjs-html-components";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
 import { getCampaigns, deleteCampaign, storeCampaign } from "../services/CampaignService.js";
+import { accessRights } from "../services/LoginService.js";
 import "@default-js/defaultjs-html-form";
 
 const TEMPLATES_PATH = `${TEMPLATE_BASEPATH}/html-campaigns-element`
@@ -53,7 +54,7 @@ class HTMLCampaignsElement extends Component {
         const root = this.root;
         if(!this.#createDialog){
             const template = await Template.load(TEMPLATE_URL__CREATEDIALOG);
-            const result = await Renderer.render({template, container: root, data: {}, mode:"append"});           
+            const result = await Renderer.render({template, container: root, data: {accessRights: accessRights()}, mode:"append"});           
             this.#createDialog = result.content[0];
             this.#createDialog.on("d-form-submit", (event) => {
                 event.preventDefault();

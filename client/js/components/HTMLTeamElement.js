@@ -2,6 +2,7 @@ import { TEMPLATE_BASEPATH, EVENT__GLOBAL_ACTION_RELOADPARENT } from "../Constan
 import { Component, define } from "@default-js/defaultjs-html-components";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
 import { getTeam, deleteTeam, storeTeam } from "../services/TeamService.js";
+import { accessRights } from "../services/LoginService.js";
 import "@default-js/defaultjs-html-form";
 
 const TEMPLATES_PATH = `${TEMPLATE_BASEPATH}/html-team-element`;
@@ -19,10 +20,17 @@ class HTMLTeamElement extends Component {
 	}
 
 	#initialized = false;
+	#open = false;
 
 	constructor() {
 		super();
 		const root = this.root;
+		root.on("action:toogle-details", (event) => {
+			event.stopPropagation();
+			const {target} = event;
+			if (target instanceof HTMLDetailsElement) 
+				this.#open = target.open;
+		});
 		root.on("action:delete-team", (event) => {
 			event.stopPropagation();
 			(async () => {
@@ -57,15 +65,15 @@ class HTMLTeamElement extends Component {
 
 	async render() {
 		const template = await TEMPLATE__ROOT;
-		await Renderer.render({ template, container: this.root, data: { team: await getTeam(this.teamId) } });
+		await Renderer.render({ template, container: this.root, data: {accessRights: accessRights(), open: this.#open, team: await getTeam(this.teamId) } });
 	}
 
 	async editorDialog() {
-		const {root, teamId} = this;
+		const { root, teamId } = this;
 		const team = await getTeam(teamId);
 		const template = await TEMPLATE__EDITOR;
 		const container = document.createElement("div");
-		await Renderer.render({ container, template, data: { team }});
+		await Renderer.render({ container, template, data: { team } });
 		root.append(container.innerHTML);
 		const dialog = root.find(":scope > dialog").last();
 		dialog.on("d-form-submit", (event) => {

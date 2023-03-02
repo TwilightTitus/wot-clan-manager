@@ -18,6 +18,7 @@ const getCachedRegistration = (campaign, member) => {
 }
 
 const cacheRegistration = (registration) =>{
+    if(!registration) return;
     const { campaignid, memberid } = registration;
     const cache = (() => {
         if(!CACHE.has(campaignid))

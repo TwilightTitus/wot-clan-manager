@@ -29,17 +29,18 @@ Application.post(ENDPOINT, async (request, response) => {
 
 Application.delete(ENDPOINT, async (request, response) => {
 	const campaign = request.params[PATHPARAM__CAMPAIGNID];
-	const member = request.session.member.id;
+	const member = currentMember(request).id;
 	await deleteCampaignRegistration(campaign, member);
 	response.json();
 });
 
 Application.get(ENDPOINT_WITH_MEMBERID, async (request, response) => {
-	if(!accessRights(request).management)
+	const campaign = request.params[PATHPARAM__CAMPAIGNID];
+	const member =  request.params[PATHPARAM__MEMBERID];
+
+	if(!accessRights(request).management && member != currentMember(request).id)
         return response.status(403).json({error: "no management rights"});
     
-	const campaign = request.params[PATHPARAM__CAMPAIGNID];
-	const member = request.params[PATHPARAM__MEMBERID];
 	const registration = await getCampaignRegistration(campaign, member);
 	response.json(registration);
 });

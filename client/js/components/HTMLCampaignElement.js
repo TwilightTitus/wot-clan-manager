@@ -4,6 +4,7 @@ import { Renderer, Template } from "@default-js/defaultjs-template-language";
 import { getCampaign, deleteCampaign, storeCampaign } from "../services/CampaignService.js";
 import { getRegistrations, getMyRegistration, getRegistrationByMember, storeRegistration } from "../services/CampaignRegistrationService.js";
 import { storeTeam } from "../services/TeamService.js";
+import { accessRights } from "../services/LoginService.js";
 import "@default-js/defaultjs-html-form";
 
 const TEMPLATES_PATH = `${TEMPLATE_BASEPATH}/html-campaign-element`;
@@ -31,13 +32,19 @@ class HTMLCampaignElement extends Component {
 	}
 
 	#initialized = false;
-
+	#open = false;
 	constructor() {
 		super();
 		const root = this.root;
 		root.on(EVENT__GLOBAL_ACTION_RELOADPARENT, (event) => {
 			event.stopPropagation();
 			this.render();
+		});
+		root.on("action:toogle-details", (event) => {
+			event.stopPropagation();
+			const {target} = event;
+			if (target instanceof HTMLDetailsElement) 
+				this.#open = target.open;
 		});
 		root.on("action:show-registrations", (event) => {
 			event.stopPropagation();
@@ -96,7 +103,7 @@ class HTMLCampaignElement extends Component {
 
 	async render() {
 		const template = await TEMPLATE_ROOT;
-		await Renderer.render({ container: this.root, template, data: { campaign: await getCampaign(this.campaignId) } });
+		await Renderer.render({ container: this.root, template, data: {accessRights: accessRights(), open:this.#open, campaign: await getCampaign(this.campaignId) } });
 	}
 
 	async openRegistrationDialog() {
@@ -140,6 +147,17 @@ class HTMLCampaignElement extends Component {
 			dialog.hide();
 			dialog.remove();
 		});
+
+		const registration = await getMyRegistration(this.campaignId);
+		if(registration){
+			const days = registration.availability || [];
+			const data = {};
+			for (let i = 0; i < days.length; i++)
+				data[`day${i+1}`] = days[i];
+
+			await form.value(data);
+		}
+
 
 		dialog.showModal();
 	}

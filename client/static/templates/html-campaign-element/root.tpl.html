@@ -1,9 +1,10 @@
-<details>
-	<summary>${campaign.name} (${new Date(campaign.startdate).toLocaleDateString()} - ${new Date(campaign.enddate).toLocaleDateString()})</summary>
-	<button class="is-danger" @click:delegate="action:delete-campaign">Kamagne löschen <span class="material-icons">delete</span></button>
-	<button class="is-highlight" @click:delegate="action:create-team">Neues Team</button>
-	<button class="is-highlight" @click:delegate="action:member-registrate">anmelden</button>
-	<button class="is-highlight" @click:delegate="action:show-registrations">Anmeldungen anzeigen</button>
+<details ?open="${open}" open @toggle:delegate="action:toogle-details">
+	<summary>${campaign.name} (${new Date(campaign.startdate).toLocaleDateString()} - ${new Date(campaign.enddate).toLocaleDateString()})
+		<button class="is-highlight" @click:delegate="action:member-registrate">anmelden</button>
+		<button class="is-highlight" @click:delegate="action:show-registrations" jstl-if="${accessRights.management}">Anmeldungen anzeigen</button>
+		<button class="is-danger" @click:delegate="action:delete-campaign" jstl-if="${accessRights.management}">Kamagne löschen <span class="material-icons">delete</span></button>	
+	</summary>
+	<button class="is-highlight" @click:delegate="action:create-team" jstl-if="${accessRights.management}">Neues Team</button>
 	<fieldset>
 		<legend>Teams</legend>
 		<jstl jstl-if="${!!campaign?.payload?.teams}" jstl-foreach="${campaign.payload.teams}" jstl-foreach-var="team">
