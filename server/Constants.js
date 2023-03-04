@@ -1,6 +1,6 @@
 export const APPLICATIONID="60b6849d65c6bc2c3241fef518a8e907";
 export const BASEPATH__API = "/api";
-export const CLANIDS = [500056248]
+export const CLANIDS = [500056248, 500073162]
 export const ALLOWED_MANAGEMENT = ["commander", "executive_officer", "personnel_officer", "combat_officer"];
 
 export const API_SYSTEM = "/system";
