@@ -3,20 +3,22 @@ import DatabaseClient from "../utils/DatabaseClient.js";
 const TABLENAME = "member";
 
 export const storeMember = async (member) => {
-	const { id, name, clanid, role, wtr } = member;
+	const { id, name, clanid, clantag, clanname, role, wtr } = member;
 	const connection = await DatabaseClient.connection();
 	await connection.query(
 		`INSERT INTO ${TABLENAME} 
-			(id,name,clanid,role,wtr) 
+			(id, name, clanid, clantag, clanname, role, wtr) 
 		VALUES 
-			($1, $2, $3, $4, $5)
+			($1, $2, $3, $4, $5, $6, $7)
         ON CONFLICT (id) DO 
         UPDATE SET 
 			name = $2, 
 			clanid = $3, 
-			role = $4, 
-			wtr = $5`, 
-		[id, name, clanid, role, wtr],
+			clantag = $4, 
+			clanname = $5,
+			role = $6, 
+			wtr = $7`, 
+		[id, name, clanid, clantag, clanname, role, wtr],
 	);
 
 	await connection.commit();
