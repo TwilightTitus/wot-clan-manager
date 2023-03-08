@@ -5,3 +5,4 @@ import "./CampaignsRoute.js";
 import "./CampaignRegistrationsRoute.js";
 import "./TeamsRoute.js";
 import "./MembersRoute.js";
+import "./MessagesRoute.js";

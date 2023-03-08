@@ -42,3 +42,13 @@ CREATE TABLE CAMPAIGNREGISTRATION (
     availability TEXT NOT NULL,
     PRIMARY KEY(campaignid, memberid)
 );
+
+CREATE TABLE MESSAGE ( 
+    id SERIAL PRIMARY KEY,
+    type VARCHAR NOT NULL,
+    reference INTEGER,
+    memberid integer NOT NULL,
+    text TEXT NOT NULL,
+    created timestamp NOT NULL DEFAULT NOW(),
+    updated timestamp NOT NULL DEFAULT NOW()
+);

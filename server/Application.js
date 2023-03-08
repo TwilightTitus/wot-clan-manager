@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import { BASEPATH__API } from "./Constants.js";
 
-const SERVERPORT = parseInt(process.env.SERVER_PORT) || 3000;
+const SERVERPORT = parseInt(process.env.PORT) || 3000;
 const SERVER = express();
 const sessionConfig = {
 	secret: "was auch immer hier als Password stehen könnte",
