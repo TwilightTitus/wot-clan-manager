@@ -47,7 +47,7 @@ class HTMLCampaignsElement extends Component {
 
     async render() {
         const template = await Template.load(TEMPLATE_URL__ROOT);
-		await Renderer.render({ container: this.root, template, data: {campaigns: await getCampaigns()} });
+		await Renderer.render({ container: this.root, template, data: {accessRights: accessRights(), campaigns: await getCampaigns()} });
     }
 
     async openCreateDialog() {

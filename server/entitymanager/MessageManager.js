@@ -7,7 +7,7 @@ export const MESSAGE_TYPE__NOTIFICATION = "notification";
 export const MESSAGE_TYPE__MEMBER = "member";
 
 export class MessageFilter extends Filter {
-	constructor({page = 1, size = 10, sorting = SORTING_ASC}){
+	constructor({page = 1, size = 10, sorting = SORTING_ASC} = {}){
 		super({page, size , sorting, sortBy: ["updated"]})
 	}
 }
